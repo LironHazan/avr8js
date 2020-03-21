@@ -100,12 +100,25 @@ export class AVRUSART {
         avrInterrupt(this.cpu, this.config.dataRegisterEmptyInterrupt);
         this.cpu.data[this.config.UCSRA] &= ~UCSRA_UDRE;
       }
+      //this.simulateTransmissionTime();
       if (ucsrb & UCSRA_TXC && ucsrb & UCSRB_TXCIE) {
         avrInterrupt(this.cpu, this.config.txCompleteInterrupt);
         this.cpu.data[this.config.UCSRA] &= ~UCSRA_TXC;
       }
     }
   }
+
+  // simulateTransmissionTime() {
+  //   while (1) {
+  //     if (this.baudRate === 115200) {
+  //     }
+  //     if (this.cpu.cycles && this.baudRate) {
+  //       // do something with cycles but what? :)
+  //       break; // 1000000 | 115200
+  //       // not sure what to do with this.baudRate or bitsPerChar
+  //     }
+  //   }
+  // }
 
   get baudRate() {
     const UBRR = (this.cpu.data[this.config.UBRRH] << 8) | this.cpu.data[this.config.UBRRL];
